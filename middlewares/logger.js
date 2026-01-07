@@ -5,10 +5,19 @@ const expressWinston = require("express-winston");
 // create the custom formatter
 const messageFormat = winston.format.combine(
   winston.format.timestamp(),
-  winston.format.printf(
-    ({ level, message, meta, timestamp }) =>
-      `${timestamp} ${level}: ${meta.error?.stack || message}`
-  )
+  winston.format.printf((info) => {
+    const { level, message, timestamp } = info;
+
+    const meta = info.meta || info.metadata || {};
+    const stack =
+    meta?.error?.stack ||
+    meta?.stack ||
+    info?.error?.stack ||
+    info?.stack;
+
+
+    return `${timestamp} ${level}: ${stack || message}`;
+  })
 );
 
 // create a request logger
