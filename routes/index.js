@@ -9,6 +9,10 @@ const { login, createUser } = require("../controllers/users");
 router.post("/signin", login);
 router.post("/signup", createUser);
 
+router.get("/", auth, (req, res) => {
+  res.send({ message: "OK" });
+});
+
 router.use("/items", clothingItem);
 
 // All /users routes are protected
