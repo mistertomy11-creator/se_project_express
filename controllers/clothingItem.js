@@ -1,10 +1,8 @@
 const ClothingItem = require("../models/clothingItem");
+const { NotFoundError, ForbiddenError } = require("../utils/errors");
 
 // Create controller
 const createItem = (req, res) => {
-  console.log(req);
-  console.log(res.body);
-
   const { name, weather, imageUrl } = req.body;
 
   ClothingItem.create({ name, weather, imageUrl, owner: req.user._id })
@@ -41,23 +39,25 @@ const updateItem = (req, res) => {
 
 // Delete controller after verifying ownership
 
-const deleteItem = (req, res) => {
+const deleteItem = (req, res, next) => {
   const { itemId } = req.params;
 
   ClothingItem.findById(itemId)
-    .orFail()
     .then((item) => {
-      // Ownership check
-      if (item.owner.toString() !== req.user._id.toString()) {
-        return res.status(403).send({ message: "Unauthorized" });
+      if (!item) {
+        throw new NotFoundError("Item not found");
       }
-      return ClothingItem.findByIdAndDelete(itemId);
+
+      if (item.owner.toString() !== req.user._id.toString()) {
+        throw new ForbiddenError("You can only delete your own items");
+      }
+
+      return item.deleteOne();
     })
     .then(() => res.status(204).send())
-    .catch((err) => {
-      res.status(500).send({ message: "Error from deleteItem", err });
-    });
+    .catch(next);
 };
+
 // Like and Unlike controllers
 const likeItem = (req, res) => {
   const { itemId } = req.params;

@@ -13,17 +13,24 @@ const { PORT = 3001, MONGODB_URI = "mongodb://127.0.0.1:27017/wtwr_db" } =
   process.env;
 
 app.use(cors());
+
+app.get("/crash-test", () => {
+  setTimeout(() => {
+    throw new Error("Server will crash now");
+  }, 0);
+});
+
 app.use(express.json());
 app.use(requestLogger);
 
 // Routes
 app.use(routes);
 
-// Error logger should come AFTER routes
-app.use(errorLogger);
-
 // Celebrate error handler MUST be invoked
 app.use(errors());
+
+// Error logger should come AFTER routes
+app.use(errorLogger);
 
 // Centralized error handler LAST
 app.use(errorHandler);

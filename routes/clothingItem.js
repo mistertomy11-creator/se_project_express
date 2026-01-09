@@ -2,7 +2,7 @@ const router = require("express").Router();
 const auth = require("../middlewares/auth");
 const {
   validateItemId,
-  validateCardBody,
+  validateItemBody,
 } = require("../middlewares/validator");
 
 const {
@@ -20,7 +20,7 @@ const {
 router.get("/", getItems);
 
 //Create (protected)
-router.post("/", auth, validateCardBody, createItem);
+router.post("/", auth, validateItemBody, createItem);
 
 //Update (protected)
 router.put("/:itemId", auth, validateItemId, updateItem);
