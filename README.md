@@ -1,18 +1,98 @@
-## Project Pitch Video
+WTWR (What to Wear?) — Back End
+🎥 Project Pitch Video
 
-Check out [this video](https://www.loom.com/share/8762587628374cbcb4a02497041a4fa4), where I describe my
-project and some challenges I faced while building it. This project highlights my ability to build responsive, scalable frontend applications that integrate cleanly with secure APIs, demonstrates my ability to design secure, resilient backend systems ready for production.”
+Check out this video : (https://www.loom.com/share/8762587628374cbcb4a02497041a4fa4)
+ where I walk through the project, explain architectural decisions, and discuss challenges I encountered during development.
 
-# WTWR (What to Wear?): Back End
+This project demonstrates my ability to design and deploy secure, production-ready backend systems, build RESTful APIs, and integrate authentication with a modern frontend application.
 
-The back-end project is focused on creating a server for the WTWR application. You’ll gain a deeper understanding of how to work with databases, set up security and testing, and deploy web applications on a remote machine. The eventual goal is to create a server with an API and user authorization.
 
-## Running the Project
+📌 Project Overview
+The WTWR (What to Wear?) backend powers a full-stack wardrobe application that allows users to:
+Register and authenticate securely
+Manage user profiles
+Create, like, and delete clothing items
+Persist data using MongoDB
+Interact with a protected API consumed by a React frontend
+The backend is built with scalability, security, and maintainability in mind and is deployed on a remote Linux server.
 
-`npm run start` — to launch the server
 
-`npm run dev` — to launch the server with the hot reload feature
+🧱 Tech Stack
 
-### Testing
+Node.js
 
-Before committing your code, make sure you edit the file `sprint.txt` in the root folder. The file `sprint.txt` should contain the number of the sprint you're currently working on. For ex. 12
+Express.js
+
+MongoDB + Mongoose
+
+JWT Authentication
+
+bcrypt (password hashing)
+
+PM2 (process management)
+
+Nginx (reverse proxy)
+
+ESLint (Airbnb style guide)
+
+
+🔐 Authentication & Security
+
+Passwords are hashed using bcrypt
+
+Authentication is handled via JSON Web Tokens (JWT)
+
+Protected routes require a valid token
+
+Centralized error handling middleware is implemented
+
+Environment variables are used for sensitive configuration
+
+
+🌐 API Endpoints (Summary)
+Users
+
+POST /signup — Register a new user
+
+POST /signin — Log in and receive JWT
+
+GET /users/me — Get current user profile
+
+PATCH /users/me — Update profile info
+
+Clothing Items
+
+GET /items — Get all clothing items
+
+POST /items — Create a new item (auth required)
+
+DELETE /items/:itemId — Delete an item (owner only)
+
+PUT /items/:itemId/likes — Like an item
+
+DELETE /items/:itemId/likes — Remove like
+
+
+🚀 Deployment
+
+The backend is deployed on a Linux virtual machine using:
+
+PM2 for process management
+
+Nginx as a reverse proxy
+
+HTTPS enabled via SSL
+
+The server is configured to automatically restart on failure or reboot.
+
+
+🔗 Related Links
+
+Backend Repository:
+https://github.com/mistertomy11-creator/se_project_xpress
+
+Frontend Repository:
+https://github.com/mistertomy11-creator/se_project_react
+
+Live Application:
+🌐 https://wisw.jumpingcrab.com
