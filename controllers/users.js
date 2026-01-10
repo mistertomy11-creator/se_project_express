@@ -70,8 +70,6 @@ const getCurrentUser = (req, res, next) => {
       console.error(err);
       if (err.name === "DocumentNotFoundError") {
         return next(new NotFoundError("User not found"));
-      } else if (err.name === "CastError") {
-        return next(new BadRequestError(err.message));
       }
       next(err);
     });
@@ -79,7 +77,7 @@ const getCurrentUser = (req, res, next) => {
 
 // POST /login
 const login = (req, res, next) => {
-  const { email, password, token } = req.body;
+  const { email, password } = req.body;
 
   user
     .findOne({ email })
@@ -124,9 +122,6 @@ const updateProfile = (req, res, next) => {
       if (err.name === "ValidationError") {
         return next(new BadRequestError(err.message));
       }
-      //if (err.name === "CastError") {
-      // return next(new BadRequestError("Invalid user ID format"));
-      //}
       next(err);
     });
 };
